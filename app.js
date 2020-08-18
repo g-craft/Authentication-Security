@@ -62,7 +62,7 @@ passport.use(new FacebookStrategy({
   }
 ));
 
-mongoose.connect(MONGO_DB, {
+mongoose.connect(process.env.MONGO_DB, {
   useNewUrlParser: true
 });
 mongoose.set("useCreateIndex", true);
