@@ -37,7 +37,8 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({
-      googleId: profile.id
+      googleId: profile.id,
+      username: profile.id
     }, function(err, user) {
       return cb(err, user);
     });
@@ -51,20 +52,21 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({
-      facebookId: profile.id
+      facebookId: profile.id,
+      username: profile.id
     }, function(err, user) {
       return cb(err, user);
     });
   }
 ));
 
-mongoose.connect("mongodb://localhost:27017/userDB", {
+mongoose.connect('mongodb+srv://demo:demo1234@cluster0.10t0c.mongodb.net/secretsDB?retryWrites=true&w=majority', {
   useNewUrlParser: true
 });
 mongoose.set("useCreateIndex", true);
 
-app.listen(3000, function() {
-  console.log("Server started on port 3000");
+app.listen(process.env.PORT || 3000, function() { //process.env.PORT to launch on Heroku server, 3000 to launch localy
+  console.log("app is running on port 3000");
 });
 
 const userSchema = new mongoose.Schema({
